@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>linux编程---C语言底层文件I/O常用文件操作函数.md | 今日事，今日毕。</title>
+  <title>linux编程动态库和静态库的制作及编译过程 | 今日事，今日毕。</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="底层文件IO">
+  <meta name="description" content="动态库和静态库的制作和编译">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux编程---C语言底层文件I&#x2F;O常用文件操作函数.md">
-<meta property="og:url" content="http://yoursite.com/2020/07/08/linux%E7%BC%96%E7%A8%8B-C%E8%AF%AD%E8%A8%80%E5%BA%95%E5%B1%82%E6%96%87%E4%BB%B6I-O%E5%B8%B8%E7%94%A8%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:title" content="linux编程动态库和静态库的制作及编译过程">
+<meta property="og:url" content="http://yoursite.com/2020/07/08/linux%E7%BC%96%E7%A8%8B%E5%8A%A8%E6%80%81%E5%BA%93%E5%92%8C%E9%9D%99%E6%80%81%E5%BA%93%E7%9A%84%E5%88%B6%E4%BD%9C%E5%8F%8A%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/index.html">
 <meta property="og:site_name" content="今日事，今日毕。">
-<meta property="og:description" content="底层文件IO">
+<meta property="og:description" content="动态库和静态库的制作和编译">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-07-08T13:21:15.000Z">
-<meta property="article:modified_time" content="2020-07-08T13:51:19.759Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200706132444840.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzQ2NjExNjAy,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-07-08T14:12:46.000Z">
+<meta property="article:modified_time" content="2020-07-08T14:14:12.974Z">
 <meta property="article:author" content="JamesonCao">
 <meta property="article:tag" content="linux编程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200706132444840.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzQ2NjExNjAy,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="今日事，今日毕。" type="application/atom+xml">
   
@@ -146,14 +148,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-linux编程-C语言底层文件I-O常用文件操作函数" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-linux编程动态库和静态库的制作及编译过程" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      linux编程---C语言底层文件I/O常用文件操作函数.md
+      linux编程动态库和静态库的制作及编译过程
     </h1>
   
 
@@ -169,96 +171,54 @@
         
         <!--显示阅读次数完毕-->
         
-        <a href="/2020/07/08/linux%E7%BC%96%E7%A8%8B-C%E8%AF%AD%E8%A8%80%E5%BA%95%E5%B1%82%E6%96%87%E4%BB%B6I-O%E5%B8%B8%E7%94%A8%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2020-07-08T13:21:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-08</time>
+        <a href="/2020/07/08/linux%E7%BC%96%E7%A8%8B%E5%8A%A8%E6%80%81%E5%BA%93%E5%92%8C%E9%9D%99%E6%80%81%E5%BA%93%E7%9A%84%E5%88%B6%E4%BD%9C%E5%8F%8A%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/" class="archive-article-date">
+  	<time datetime="2020-07-08T14:12:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-08</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="底层文件IO"><a href="#底层文件IO" class="headerlink" title="底层文件IO"></a>底层文件IO</h1><a id="more"></a>
-<h2 id="一、包含的头文件"><a href="#一、包含的头文件" class="headerlink" title="一、包含的头文件"></a>一、包含的头文件</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;unistdio.h&gt;</span><br><span class="line">&lt;fcntl.h&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="二、文件描述符与open函数与close函数"><a href="#二、文件描述符与open函数与close函数" class="headerlink" title="二、文件描述符与open函数与close函数"></a>二、文件描述符与open函数与close函数</h2><h3 id="1-文件描述符fd-自己命名用以区分不同的文件"><a href="#1-文件描述符fd-自己命名用以区分不同的文件" class="headerlink" title="1.文件描述符fd(自己命名用以区分不同的文件)"></a>1.文件描述符fd(自己命名用以区分不同的文件)</h3><h3 id="2-open函数-打开或创建一个文件"><a href="#2-open函数-打开或创建一个文件" class="headerlink" title="2.open函数(打开或创建一个文件)"></a>2.open函数(打开或创建一个文件)</h3><p>用文件描述符去接收其返回值(int)</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> fd = <span class="built_in">open</span>(<span class="keyword">char</span> *, flag, Authority);</span><br></pre></td></tr></table></figure>
-<p>第一个参数(char*):包含有文件名和路径</p>
-<p>第二个参数(flag):打开文件的方式</p>
-<table>
-<thead>
-<tr>
-<th>flag</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>O_RDONLY</td>
-<td>只读</td>
-</tr>
-<tr>
-<td>O_WRONLY</td>
-<td>只写</td>
-</tr>
-<tr>
-<td>O_RDWR</td>
-<td>可读可写</td>
-</tr>
-<tr>
-<td>O_CREATE</td>
-<td>创建一个文件</td>
-</tr>
-<tr>
-<td>O_EXCL</td>
-<td>测试文件是否存在</td>
-</tr>
-<tr>
-<td>O_TRUNC</td>
-<td>打开一个文件并把文件内原来的内容删除</td>
-</tr>
-<tr>
-<td>O_APPEND</td>
-<td>追加方式打开文件</td>
-</tr>
-</tbody></table>
-<p>第三个参数(Authoritty):创建文件的权限(打开一个文件不需要写此参数)</p>
-<h3 id="3-close函数"><a href="#3-close函数" class="headerlink" title="3.close函数"></a>3.close函数</h3><p>作用:关闭文件</p>
-<h2 id="三、write函数"><a href="#三、write函数" class="headerlink" title="三、write函数"></a>三、write函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> wr_ret = <span class="built_in">write</span>(<span class="keyword">int</span> fd, <span class="keyword">void</span> *wr_buf, <span class="keyword">size_t</span> count);</span><br></pre></td></tr></table></figure>
-<p>第一个参数(fd):文件描述符</p>
-<p>第二个参数(wr_buf):向文件中写入的内容</p>
-<p>第三个参数(count):将要向文件中写多少内容</p>
-<p>返回值(wr_ret):实际所写的内容d</p>
-<h2 id="四、read函数"><a href="#四、read函数" class="headerlink" title="四、read函数"></a>四、read函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> rd_buf = <span class="built_in">read</span>(<span class="keyword">int</span> fd, <span class="keyword">void</span> *rd_buf, <span class="keyword">size_t</span> count);</span><br></pre></td></tr></table></figure>
-<p>第一个参数(fd):文件描述符</p>
-<p>第二个参数(rd_buf):为即将读取的内容设置一个缓冲区</p>
-<p>第三个参数(count):读多少个</p>
-<p>返回值(rd_ret):实际所读取内容的字节数</p>
-<h2 id="五、lseek函数"><a href="#五、lseek函数" class="headerlink" title="五、lseek函数"></a>五、lseek函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lseek(<span class="keyword">int</span> fd, <span class="keyword">off_t</span> offset, <span class="keyword">int</span> whence);</span><br></pre></td></tr></table></figure>
-<p>第一个参数(fd):文件描述符</p>
-<p>第二个参数(offset):文件位置指针移动的位数</p>
-<p>第三个参数(whence):将文件位置指针移动到何处</p>
-<table>
-<thead>
-<tr>
-<th>whence</th>
-<th>位置</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>SEEK_SET</td>
-<td>文件的开头</td>
-</tr>
-<tr>
-<td>SEEK_CUR</td>
-<td>文件位置指针的当前位置</td>
-</tr>
-<tr>
-<td>SEEK_END</td>
-<td>文件末尾</td>
-</tr>
-</tbody></table>
-<p>函数的返回值:</p>
-<p>成功:文件的当前位置</p>
-<p>失败:-1</p>
-<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//定义读写缓冲区</span></span><br><span class="line">    <span class="keyword">char</span> wr_buf[] = <span class="string">"hello world!"</span>;</span><br><span class="line">    <span class="keyword">char</span> rd_buf[<span class="number">128</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="comment">//定义文件描述符</span></span><br><span class="line">    <span class="keyword">int</span> fd = <span class="built_in">open</span>(<span class="string">"1.txt"</span>, O_TRUNC|O_RDWR, <span class="number">0777</span>);</span><br><span class="line">    <span class="keyword">if</span>(fd &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"open error!\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">write</span>(fd, wr_buf, <span class="keyword">sizeof</span>(wr_buf));</span><br><span class="line">    lseek(fd, <span class="number">-6</span>, SEEK_END);</span><br><span class="line">    <span class="built_in">read</span>(fd, rd_buf, <span class="keyword">sizeof</span>(rd_buf));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, rd_buf);</span><br><span class="line">    <span class="comment">//关闭文件</span></span><br><span class="line">    <span class="built_in">close</span>(fd);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="动态库和静态库的制作和编译"><a href="#动态库和静态库的制作和编译" class="headerlink" title="动态库和静态库的制作和编译"></a>动态库和静态库的制作和编译</h1><a id="more"></a>
+<h2 id="一、gcc编译流程"><a href="#一、gcc编译流程" class="headerlink" title="一、gcc编译流程"></a>一、gcc编译流程</h2><p><img src="https://img-blog.csdnimg.cn/20200706132444840.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzQ2NjExNjAy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="二、静态库的制作和编译"><a href="#二、静态库的制作和编译" class="headerlink" title="二、静态库的制作和编译"></a>二、静态库的制作和编译</h2><h3 id="1-生成目标文件"><a href="#1-生成目标文件" class="headerlink" title="1.生成目标文件"></a>1.生成目标文件</h3><p>例如编写一个main.c文件和一个fun.c文件</p>
+<p>main.c：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span>, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">3</span>, b = <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">int</span> sum = Add(a, b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a + b = %d\n"</span>, sum);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>fun.c：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后执行此命令：</p>
+<pre><code>gcc -c fun.c</code></pre><p>此时会生成目标文件fun.o</p>
+<h3 id="2-静态函数库创建"><a href="#2-静态函数库创建" class="headerlink" title="2.静态函数库创建"></a>2.静态函数库创建</h3><p>执行此命令：</p>
+<pre><code>ar -cr libxxx.a fun.o</code></pre><p>此时会创建生成一个静态库，库名为libxxx.a，xxx是你自己定义的名字</p>
+<p>c：create</p>
+<p>r：replace</p>
+<h3 id="3-静态库的编译"><a href="#3-静态库的编译" class="headerlink" title="3.静态库的编译"></a>3.静态库的编译</h3><p>执行此命令：</p>
+<pre><code>gcc file.c -L ./ -l xxx</code></pre><p>-L：指定静态函数库的位置供查找，’./‘表示静态函数库在本目录下查找</p>
+<p>-l：指定静态函数库名</p>
+<p>此时会生成可执行文件a.out</p>
+<p>执行</p>
+<pre><code>./a.out</code></pre><p>即输出</p>
+<pre><code>a + b = 7</code></pre><h3 id="三、动态库的制作和编译"><a href="#三、动态库的制作和编译" class="headerlink" title="三、动态库的制作和编译"></a>三、动态库的制作和编译</h3><h3 id="1-生成目标文件-同上"><a href="#1-生成目标文件-同上" class="headerlink" title="1.生成目标文件(同上)"></a>1.生成目标文件(同上)</h3><pre><code>gcc -c fun.c</code></pre><p>此时生成目标文件fun.o</p>
+<h3 id="2-动态函数库创建"><a href="#2-动态函数库创建" class="headerlink" title="2.动态函数库创建"></a>2.动态函数库创建</h3><p>执行此命令：</p>
+<pre><code>gcc -shared -fpic fun.o -o libxxx.so</code></pre><p>-shared：生成共享库</p>
+<p>-fpic：产生位置无关代码</p>
+<p>此时会生成一个动态库，库名为libxxx.so</p>
+<h3 id="3-动态库的编译"><a href="#3-动态库的编译" class="headerlink" title="3.动态库的编译"></a>3.动态库的编译</h3><p>执行此命令：</p>
+<pre><code>gcc main.c -L ./ -l xxx</code></pre><p>此时会生成可执行文件a.out</p>
+<p>执行./a.out命令，此时发现会报错</p>
+<pre><code>No such file or directory...</code></pre><p>因为动态库在使用时，会查找/usr/lib/目录下的动态函数库，而此时我们生成的libxxx.so不在这个目录下。</p>
+<p>所以接下来第一种方法可以将这个动态库移动到这个目录下，执行命令</p>
+<pre><code>sudo mv libxxx.so /usr/lib/</code></pre><p>再次执行./a.out命令，输出a + b = 7。</p>
+<p>第二种方法可以将生成的动态库的目录添加到环境变量LD_LIBRARY_PATH中去</p>
+<p>执行此命令</p>
+<pre><code>sudo export LD_LIBRARY_PATH=/...</code></pre><p>/…表示你创建生成动态库的路径</p>
+<p>此时再次运行./a.out，输出a + b = 7。</p>
+<p>还有第三种方法是修改配置脚本，将生成的动态库的目录加到/etc/ld.so.conf中去</p>
+<p>执行此命令</p>
+<pre><code>sudo vi /etc/ld.so.conf</code></pre><p>在此文档中加入你生成动态库的目录，保存退出。</p>
+<p>然后执行以下命令</p>
+<pre><code>ldconfig /etc/ld.so.conf</code></pre><p>接着运行./a.out，输出a + b = 7。</p>
+
       
 
       
@@ -348,7 +308,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/08/linux%E7%BC%96%E7%A8%8B-C%E8%AF%AD%E8%A8%80%E5%BA%95%E5%B1%82%E6%96%87%E4%BB%B6I-O%E5%B8%B8%E7%94%A8%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/08/linux%E7%BC%96%E7%A8%8B%E5%8A%A8%E6%80%81%E5%BA%93%E5%92%8C%E9%9D%99%E6%80%81%E5%BA%93%E7%9A%84%E5%88%B6%E4%BD%9C%E5%8F%8A%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -362,15 +322,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/07/08/linux%E7%BC%96%E7%A8%8B-%E6%A0%87%E5%87%86%E9%AB%98%E7%BA%A7I-O%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          linux编程---标准高级I/O基础知识
-        
-      </div>
-    </a>
   
+    <a href="/2020/07/08/linux%E7%BC%96%E7%A8%8B-%E6%A0%87%E5%87%86%E9%AB%98%E7%BA%A7I-O%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">linux编程---标准高级I/O基础知识</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
@@ -395,7 +351,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#底层文件IO"><span class="toc-number">1.</span> <span class="toc-text">底层文件IO</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、包含的头文件"><span class="toc-number">1.1.</span> <span class="toc-text">一、包含的头文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、文件描述符与open函数与close函数"><span class="toc-number">1.2.</span> <span class="toc-text">二、文件描述符与open函数与close函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-文件描述符fd-自己命名用以区分不同的文件"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.文件描述符fd(自己命名用以区分不同的文件)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-open函数-打开或创建一个文件"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.open函数(打开或创建一个文件)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-close函数"><span class="toc-number">1.2.3.</span> <span class="toc-text">3.close函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、write函数"><span class="toc-number">1.3.</span> <span class="toc-text">三、write函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、read函数"><span class="toc-number">1.4.</span> <span class="toc-text">四、read函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、lseek函数"><span class="toc-number">1.5.</span> <span class="toc-text">五、lseek函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码示例"><span class="toc-number">1.6.</span> <span class="toc-text">代码示例</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#动态库和静态库的制作和编译"><span class="toc-number">1.</span> <span class="toc-text">动态库和静态库的制作和编译</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、gcc编译流程"><span class="toc-number">1.1.</span> <span class="toc-text">一、gcc编译流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、静态库的制作和编译"><span class="toc-number">1.2.</span> <span class="toc-text">二、静态库的制作和编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-生成目标文件"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.生成目标文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-静态函数库创建"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.静态函数库创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-静态库的编译"><span class="toc-number">1.2.3.</span> <span class="toc-text">3.静态库的编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、动态库的制作和编译"><span class="toc-number">1.2.4.</span> <span class="toc-text">三、动态库的制作和编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-生成目标文件-同上"><span class="toc-number">1.2.5.</span> <span class="toc-text">1.生成目标文件(同上)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-动态函数库创建"><span class="toc-number">1.2.6.</span> <span class="toc-text">2.动态函数库创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-动态库的编译"><span class="toc-number">1.2.7.</span> <span class="toc-text">3.动态库的编译</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
